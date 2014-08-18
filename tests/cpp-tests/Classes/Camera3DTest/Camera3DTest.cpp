@@ -262,7 +262,7 @@ void Camera3DTestDemo::onEnter()
     addChild(layer3D,0);
     _layer3D=layer3D;
     _curState=State_None;
-    addNewbillboradWithCoords(Vec3(10,0,10));
+    addNewbillboradWithCoords(Vec3(10,20,10));
     addNewSpriteWithCoords( Vec3(0,0,0),"Sprite3DTest/girl.c3b",true,0.2,true);
     
     TTFConfig ttfConfig("fonts/arial.ttf", 20);
@@ -352,10 +352,16 @@ void Camera3DTestDemo::backCallback(Ref* sender)
 }
 void Camera3DTestDemo::addNewbillboradWithCoords(Vec3 p)
 {
-    _billborad = BillBorad::create("Images/Icon.png");
+    _billborad = BillBorad::create("Images/grossini.png");
     _billborad->setScale(0.5f);
-    _layer3D->addChild(_billborad,1);
+    _layer3D->addChild(_billborad);
     _billborad->setPosition3D(Vec3( p.x,p.y,p.z ));
+
+    auto billborad = BillBorad::create("Images/Icon.png");
+    billborad->setScale(0.5f);
+    _layer3D->addChild(billborad);
+    billborad->setPosition3D(Vec3( -10,10,0 ));
+
 }
 void Camera3DTestDemo::addNewSpriteWithCoords(Vec3 p,std::string fileName,bool playAnimation,float scale,bool bindCamera)
 {

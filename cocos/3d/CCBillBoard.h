@@ -85,9 +85,11 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~BillBorad();
 
 protected:
-    Mat4      _BillBoradMat;
+    Mat4           _BillBoradMat;
+    QuadCommand    _BBquadCommand;
 
     void calculateBillBoradMatrix(Mat4 &dst);
+    void setAlphaTest();
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(BillBorad);

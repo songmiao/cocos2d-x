@@ -45,6 +45,7 @@ BillBorad* BillBorad::createWithTexture(Texture2D *texture)
     BillBorad *billborad = new (std::nothrow) BillBorad();
     if (billborad && billborad->initWithTexture(texture))
     {
+        billborad->setAlphaTest();
         billborad->autorelease();
         return billborad;
     }
@@ -58,6 +59,7 @@ BillBorad* BillBorad::create(const std::string& filename)
     BillBorad *billborad = new (std::nothrow) BillBorad();
     if (billborad && billborad->initWithFile(filename))
     {
+        billborad->setAlphaTest();
         billborad->autorelease();
         return billborad;
     }
@@ -70,6 +72,7 @@ BillBorad* BillBorad::create(const std::string& filename, const Rect& rect)
     BillBorad *billborad = new (std::nothrow) BillBorad();
     if (billborad && billborad->initWithFile(filename, rect))
     {
+        billborad->setAlphaTest();
         billborad->autorelease();
         return billborad;
     }
@@ -82,6 +85,7 @@ BillBorad* BillBorad::create()
     BillBorad *billborad = new (std::nothrow) BillBorad();
     if (billborad && billborad->init())
     {
+        billborad->setAlphaTest();
         billborad->autorelease();
         return billborad;
     }
@@ -99,8 +103,9 @@ void BillBorad::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 
     if(_insideBounds)
     {
-        _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, transMat);
-        renderer->addCommand(&_quadCommand);
+        _BBquadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, transMat);
+        glEnable(GL_DEPTH_TEST);
+        renderer->addCommand(&_BBquadCommand);
     }
 }
 
@@ -114,6 +119,11 @@ void BillBorad::calculateBillBoradMatrix(Mat4 &dst)
     dst.m[14]=0;
     //dst.m[0] = dst.m[5] = dst.m[10] = 1;
     //dst.m[1] = dst.m[2] = dst.m[4] = dst.m[6] = dst.m[8] = dst.m[9] = 0;
+}
+
+void BillBorad::setAlphaTest()
+{
+    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV));
 }
 
 NS_CC_END
