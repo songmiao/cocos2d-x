@@ -262,7 +262,9 @@ void Camera3DTestDemo::onEnter()
     addChild(layer3D,0);
     _layer3D=layer3D;
     _curState=State_None;
+    addNewbillboradWithCoords(Vec3(10,0,10));
     addNewSpriteWithCoords( Vec3(0,0,0),"Sprite3DTest/girl.c3b",true,0.2,true);
+    
     TTFConfig ttfConfig("fonts/arial.ttf", 20);
     auto label1 = Label::createWithTTF(ttfConfig,"zoom out");
     auto menuItem1 = MenuItemLabel::create(label1, CC_CALLBACK_1(Camera3DTestDemo::scaleCameraCallback,this,1));
@@ -347,6 +349,13 @@ void Camera3DTestDemo::backCallback(Ref* sender)
     s->addChild( backSpriteTestAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
+}
+void Camera3DTestDemo::addNewbillboradWithCoords(Vec3 p)
+{
+    _billborad = BillBorad::create("Images/Icon.png");
+    _billborad->setScale(0.5f);
+    _layer3D->addChild(_billborad,1);
+    _billborad->setPosition3D(Vec3( p.x,p.y,p.z ));
 }
 void Camera3DTestDemo::addNewSpriteWithCoords(Vec3 p,std::string fileName,bool playAnimation,float scale,bool bindCamera)
 {

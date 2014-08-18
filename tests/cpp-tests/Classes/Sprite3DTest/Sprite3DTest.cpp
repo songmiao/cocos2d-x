@@ -1336,8 +1336,8 @@ BillBoardTest::BillBoardTest()
         _layerBillBorad->addChild(_camera);
     }
     
-    addNewBillBoradWithCoords(Vec3(20,0,0));
-    addNewAniBillBoradWithCoords(Vec3(-20,0,0));
+    addNewBillBoradWithCoords(Vec3(10,0,0));
+    //addNewAniBillBoradWithCoords(Vec3(-20,0,0));
     _camera->setPosition3D(Vec3(0, 130, 130));
     _camera->lookAt(Vec3(0,0,0), Vec3(0,1,0));
 
@@ -1366,6 +1366,7 @@ BillBoardTest::BillBoardTest()
     menuItem2->setPosition( Vec2( s.width-50, VisibleRect::top().y-200) );
     addChild(menu, 0);
     _layerBillBorad->setCameraMask(2);
+    scheduleUpdate();
 }
 BillBoardTest::~BillBoardTest()
 {
@@ -1387,27 +1388,37 @@ void BillBoardTest::addNewBillBoradWithCoords(Vec3 p)
     _billborad = BillBorad::create("Images/Icon.png");
     _billborad->setScale(0.5f);
     _layerBillBorad->addChild(_billborad,10);
-    _billborad->setPosition(Vec2( p.x,p.y ));
+    _billborad->setPosition3D(Vec3( p.x,p.y,p.z ));
 
-    auto billborad1 = BillBorad::create("Images/Icon.png");
-    billborad1->setScale(0.5f);
-    _layerBillBorad->addChild(billborad1,10);
-    billborad1->setPosition3D(Vec3(p.x,p.y,p.z - 130));
+    _sprite = Sprite::create("Images/grossini.png");
+    _sprite->setScale(0.5f);
+    _layerBillBorad->addChild(_sprite,10);
+    _sprite->setPosition3D(Vec3(50,0,0));
 
-    auto billborad2 = BillBorad::create("Images/Icon.png");
-    billborad2->setScale(0.5f);
-    _layerBillBorad->addChild(billborad2,10);
-    billborad2->setPosition3D(Vec3(p.x,p.y,p.z + 50));
+    auto sprite = Sprite::create("Images/grossini.png");
+    //sprite->setScale(0.5f);
+    _billborad->addChild(sprite);
+    sprite->setPosition3D(Vec3(20,0,0));
 
-    auto billborad3 = BillBorad::create("Images/Icon.png");
-    billborad3->setScale(0.5f);
-    _layerBillBorad->addChild(billborad3,10);
-    billborad3->setPosition3D(Vec3(p.x,p.y,p.z + 90));
+    //auto billborad1 = BillBorad::create("Images/Icon.png");
+    //billborad1->setScale(0.5f);
+    //_layerBillBorad->addChild(billborad1,10);
+    //billborad1->setPosition3D(Vec3(p.x,p.y,p.z - 130));
 
-    auto billborad4 = BillBorad::create("Images/Icon.png");
-    billborad4->setScale(0.5f);
-    _layerBillBorad->addChild(billborad4,10);
-    billborad4->setPosition3D(Vec3(p.x,p.y,p.z - 60));
+    //auto billborad2 = BillBorad::create("Images/Icon.png");
+    //billborad2->setScale(0.5f);
+    //_layerBillBorad->addChild(billborad2,10);
+    //billborad2->setPosition3D(Vec3(p.x,p.y,p.z + 50));
+
+    //auto billborad3 = BillBorad::create("Images/Icon.png");
+    //billborad3->setScale(0.5f);
+    //_layerBillBorad->addChild(billborad3,10);
+    //billborad3->setPosition3D(Vec3(p.x,p.y,p.z + 90));
+
+    //auto billborad4 = BillBorad::create("Images/Icon.png");
+    //billborad4->setScale(0.5f);
+    //_layerBillBorad->addChild(billborad4,10);
+    //billborad4->setPosition3D(Vec3(p.x,p.y,p.z - 60));
 
 
 }
@@ -1511,7 +1522,12 @@ void BillBoardTest::addNewAniBillBoradWithCoords(Vec3 p)
 }
 void BillBoardTest::update(float dt)
 {
+    Mat4 dst =  _camera->getViewMatrix().getInversed();
 
+    dst.m[12]=0;
+    dst.m[13]=0;
+    dst.m[14]=0;
+    _sprite->setAdditionalTransform(&dst);
 }
 void BillBoardTest::onTouchesMoved(const std::vector<Touch*>& touches, Event* event)
 {

@@ -323,6 +323,7 @@ protected:
     BillBorad*        _billboradAni;
     Camera*           _camera;
     Layer*            _layerBillBorad;
+    Sprite*           _sprite;
 
 };
 

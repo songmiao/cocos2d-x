@@ -90,10 +90,10 @@ BillBorad* BillBorad::create()
 }
 
 void BillBorad::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
-{
+{   
     calculateBillBoradMatrix(_BillBoradMat);
-    Mat4 transMat = transform;
-    transMat *= _BillBoradMat;
+     Mat4 transMat = transform;
+    transMat = transMat * _BillBoradMat;
     // Don't do calculate the culling if the transform was not updated
     _insideBounds = (flags & FLAGS_TRANSFORM_DIRTY) ? renderer->checkVisibility(transMat, _contentSize) : _insideBounds;
 
@@ -112,6 +112,8 @@ void BillBorad::calculateBillBoradMatrix(Mat4 &dst)
     dst.m[12]=0;
     dst.m[13]=0;
     dst.m[14]=0;
+    //dst.m[0] = dst.m[5] = dst.m[10] = 1;
+    //dst.m[1] = dst.m[2] = dst.m[4] = dst.m[6] = dst.m[8] = dst.m[9] = 0;
 }
 
 NS_CC_END

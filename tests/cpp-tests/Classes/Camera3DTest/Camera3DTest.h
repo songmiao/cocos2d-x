@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "../BaseTest.h"
 #include <string>
 #include "base/CCCamera.h"
+#include "3d/CCBillBoard.h"
 namespace cocos2d {
     class Sprite3D;
     class Delay;
@@ -77,6 +78,7 @@ public:
     void updateState(float elapsedTime);
     bool isState(unsigned int state,unsigned int bit) const;
     void reachEndCallBack();
+    void addNewbillboradWithCoords(Vec3 p);
 protected:
     std::string    _title;
     Layer*         _layer3D;
@@ -88,6 +90,7 @@ protected:
     unsigned int   _curState;
     Camera*      _camera;
     MoveTo* _moveAction;
+    BillBorad* _billborad;
 };
 class Camera3DTestScene : public TestScene
 {
