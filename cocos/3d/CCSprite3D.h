@@ -36,6 +36,7 @@
 #include "3d/CCAABB.h"
 #include "3d/CCBundle3DData.h"
 #include "3d/CCMesh.h"
+#include "3d/CCMeshVertexIndexData.h"
 #include "3d/3dExport.h"
 
 
@@ -65,10 +66,10 @@ public:
     void setTexture(Texture2D* texture);
     
     /**get SubMeshState by index*/
-    SubMeshState* getSubMeshState(int index) const;
+    Mesh* getMeshByIndex(int index) const;
     
     /**get SubMeshState by Name */
-    SubMeshState* getSubMeshStateByName(const std::string& name) const;
+    Mesh* getMeshByName(const std::string& name) const;
 
     /**get mesh*/
     Mesh* getMesh() const { return _meshes.at(0); }
@@ -90,6 +91,12 @@ public:
     // overrides
     virtual void setBlendFunc(const BlendFunc &blendFunc) override;
     virtual const BlendFunc &getBlendFunc() const override;
+    
+    // overrides
+    /** set GLProgramState, you should bind attributes by yourself */
+    virtual void setGLProgramState(GLProgramState *glProgramState) override;
+    /** just rember bind attributes */
+    virtual void setGLProgram(GLProgram *glprogram) override;
     
     /*
      * Get AABB
@@ -130,16 +137,17 @@ CC_CONSTRUCTOR_ACCESS:
     /**draw*/
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     
-    /**get default shader*/
-    virtual GLProgram* getDefaultGLProgram(bool textured = true);
-    
     /**generate default GLProgramState*/
     void genGLProgramState();
 
     void createNode(NodeData* nodedata, Node* root, const MaterialDatas& matrialdatas, bool singleSprite);
-    /**get SubMesh by Id*/
-    SubMesh* getSubMesh(const std::string& subMeshId) const;
-    void  addSubMeshState(SubMeshState* subMeshState);
+    void createAttachSprite3DNode(NodeData* nodedata,const MaterialDatas& matrialdatas);
+    Sprite3D* createSprite3DNode(NodeData* nodedata,ModelData* modeldata,const MaterialDatas& matrialdatas);
+
+    /**get MeshIndexData by Id*/
+    MeshIndexData* getMeshIndexData(const std::string& indexId) const;
+    
+    void  addMesh(Mesh* mesh);
     
     void onAABBDirty() { _aabbDirty = true; }
     
@@ -147,16 +155,13 @@ protected:
 
     Skeleton3D*                  _skeleton; //skeleton
     
-    std::vector<MeshCommand>     _meshCommands; //render command each for one submesh
-    
-    Vector<SubMeshState*>        _subMeshStates; // SubMeshStates
+    Vector<MeshVertexData*>      _meshVertexDatas;
     
     std::unordered_map<std::string, AttachNode*> _attachments;
 
     BlendFunc                    _blend;
     
-    //since 3.3
-    Vector<Mesh*>           _meshes;
+    Vector<Mesh*>              _meshes;
 
     mutable AABB                 _aabb;                 // cache current aabb
     mutable Mat4                 _nodeToWorldTransform; // cache the matrix
@@ -169,7 +174,7 @@ class Sprite3DCache
 public:
     struct Sprite3DData
     {
-        Vector<Mesh*>   meshes;
+        Vector<MeshVertexData*>   meshVertexDatas;
         NodeDatas*      nodedatas;
         MaterialDatas*  materialdatas;
         ~Sprite3DData()
@@ -178,7 +183,7 @@ public:
                 delete nodedatas;
             if (materialdatas)
                 delete materialdatas;
-            meshes.clear();
+            meshVertexDatas.clear();
         }
     };
     

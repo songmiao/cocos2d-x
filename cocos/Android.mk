@@ -117,6 +117,7 @@ base/CCIMEDispatcher.cpp \
 base/CCModuleManager.cpp \
 base/CCNS.cpp \
 base/CCProfiling.cpp \
+base/ccRandom.cpp \
 base/CCRef.cpp \
 base/CCScheduler.cpp \
 base/CCScriptSupport.cpp \
@@ -187,6 +188,7 @@ physics/chipmunk/CCPhysicsWorldInfo_chipmunk.cpp \
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/. \
                     $(LOCAL_PATH)/platform/android \
+                    $(LOCAL_PATH)/base \
                     $(LOCAL_PATH)/../external/tinyxml2 \
                     $(LOCAL_PATH)/../external/unzip \
                     $(LOCAL_PATH)/../external/chipmunk/include/chipmunk \
@@ -210,10 +212,13 @@ LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -lz \
                        -landroid
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos_freetype2_static
-LOCAL_WHOLE_STATIC_LIBRARIES += chipmunk_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos2dxandroid_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_png_static
+LOCAL_STATIC_LIBRARIES := cocos_freetype2_static
+LOCAL_STATIC_LIBRARIES += chipmunk_static
+LOCAL_STATIC_LIBRARIES += cocos_png_static
+LOCAL_STATIC_LIBRARIES += cocos_jpeg_static
+LOCAL_STATIC_LIBRARIES += cocos_tiff_static
+LOCAL_STATIC_LIBRARIES += cocos_webp_static
+LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dxandroid_static
 
 # define the macro to compile through support/zip_support/ioapi.c
 LOCAL_CFLAGS   :=  -DUSE_FILE32API
@@ -227,3 +232,6 @@ $(call import-module,freetype2/prebuilt/android)
 $(call import-module,chipmunk)
 $(call import-module,platform/android)
 $(call import-module,png/prebuilt/android)
+$(call import-module,jpeg/prebuilt/android)
+$(call import-module,tiff/prebuilt/android)
+$(call import-module,webp/prebuilt/android)

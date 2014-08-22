@@ -48,10 +48,7 @@
     <ClCompile Include="..\CCSprite3DMaterial.cpp">
       <Filter>3d</Filter>
     </ClCompile>
-    <ClCompile Include="..\CCSubMesh.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCSubMeshState.cpp">
+    <ClCompile Include="..\CCMeshVertexIndexData.cpp">
       <Filter>3d</Filter>
     </ClCompile>
     <ClCompile Include="..\CCSequence3D.cpp">
@@ -107,16 +104,14 @@
     <ClInclude Include="..\CCSprite3DMaterial.h">
       <Filter>3d</Filter>
     </ClInclude>
-    <ClInclude Include="..\CCSubMesh.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCSubMeshState.h">
-      <Filter>3d</Filter>
-    </ClInclude>
     <ClInclude Include="..\cocos3d.h">
       <Filter>3d</Filter>
     </ClInclude>
+
     <ClInclude Include="..\3dExport.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCMeshVertexIndexData.h">
       <Filter>3d</Filter>
     </ClInclude>
     <ClInclude Include="..\CCSequence3D.h">
