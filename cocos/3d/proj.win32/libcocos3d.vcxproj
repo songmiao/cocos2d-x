@@ -27,6 +27,7 @@
     <ClCompile Include="..\CCOBB.cpp" />
     <ClCompile Include="..\CCObjLoader.cpp" />
     <ClCompile Include="..\CCRay.cpp" />
+    <ClCompile Include="..\CCSequence3D.cpp" />
     <ClCompile Include="..\CCSkeleton3D.cpp" />
     <ClCompile Include="..\CCSprite3D.cpp" />
     <ClCompile Include="..\CCSprite3DMaterial.cpp" />
@@ -48,6 +49,7 @@
     <ClInclude Include="..\CCOBB.h" />
     <ClInclude Include="..\CCObjLoader.h" />
     <ClInclude Include="..\CCRay.h" />
+    <ClInclude Include="..\CCSequence3D.h" />
     <ClInclude Include="..\CCSkeleton3D.h" />
     <ClInclude Include="..\CCSprite3D.h" />
     <ClInclude Include="..\CCSprite3DMaterial.h" />

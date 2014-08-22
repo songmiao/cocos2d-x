@@ -54,6 +54,9 @@
     <ClCompile Include="..\CCSubMeshState.cpp">
       <Filter>3d</Filter>
     </ClCompile>
+    <ClCompile Include="..\CCSequence3D.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\CCAABB.h">
@@ -114,6 +117,9 @@
       <Filter>3d</Filter>
     </ClInclude>
     <ClInclude Include="..\3dExport.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCSequence3D.h">
       <Filter>3d</Filter>
     </ClInclude>
   </ItemGroup>

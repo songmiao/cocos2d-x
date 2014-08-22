@@ -31,6 +31,7 @@
 #include "3d/CCRay.h"
 #include "3d/CCSprite3D.h"
 #include "DrawNode3D.h"
+#include "3d/CCSequence3D.h"
 
 #include <algorithm>
 #include "../testResource.h"
@@ -840,32 +841,32 @@ std::string Animate3DTest::subtitle() const
 
 void Animate3DTest::update(float dt)
 {
-    if (_state == State::HURT_TO_SWIMMING)
-    {
-        _elapseTransTime += dt;
-        float t = _elapseTransTime / _transTime;
+    //if (_state == State::HURT_TO_SWIMMING)
+    //{
+    //    _elapseTransTime += dt;
+    //    float t = _elapseTransTime / _transTime;
         
-        if (t >= 1.f)
-        {
-            t = 1.f;
-            _sprite->stopAction(_hurt);
-            _state = State::SWIMMING;
-        }
-        _swim->setWeight(t);
-        _hurt->setWeight(1.f - t);
-    }
-    else if (_state == State::SWIMMING_TO_HURT)
-    {
-        _elapseTransTime += dt;
-        float t = _elapseTransTime / _transTime;
-        if (t >= 1.f)
-        {
-            t = 1.f;
-            _state = State::HURT;
-        }
-        _swim->setWeight(1.f - t);
-        _hurt->setWeight(t);
-    }
+    //    if (t >= 1.f)
+    //    {
+    //        t = 1.f;
+    //        //_sprite->stopAction(_hurt);
+    //        _state = State::SWIMMING;
+    //    }
+    //    _swim->setWeight(t);
+    //    _hurt->setWeight(1.f - t);
+    //}
+    //if (_state == State::SWIMMING_TO_HURT)
+    //{
+    //    _elapseTransTime += dt;
+    //    float t = _elapseTransTime / _transTime;
+    //    if (t >= 1.f)
+    //    {
+    //        t = 1.f;
+    //        _state = State::HURT;
+    //    }
+    //    _swim->setWeight(1.f - t);
+    //    _hurt->setWeight(t);
+    //}
 }
 
 void Animate3DTest::addSprite3D()
@@ -881,19 +882,42 @@ void Animate3DTest::addSprite3D()
     if (animation)
     {
         auto animate = Animate3D::create(animation, 0.f, 1.933f);
-        sprite->runAction(RepeatForever::create(animate));
+        //sprite->runAction(RepeatForever::create(animate));
         _swim = animate;
         _swim->retain();
         _hurt = Animate3D::create(animation, 1.933f, 2.8f);
+        _hurt->setWeight(0);
         _hurt->retain();
         _state = State::SWIMMING;
     }
     
     _moveAction = MoveTo::create(4.f, Vec2(s.width / 5.f, s.height / 2.f));
     _moveAction->retain();
-    auto seq = Sequence::create(_moveAction, CallFunc::create(CC_CALLBACK_0(Animate3DTest::reachEndCallBack, this)), nullptr);
-    seq->setTag(100);
+    //auto seq = Sequence::create(_moveAction, CallFunc::create(CC_CALLBACK_0(Animate3DTest::reachEndCallBack, this)), nullptr);
+    auto seq = Sequence3D::create(_swim, _hurt, nullptr);
+    //seq->setTag(100);
     sprite->runAction(seq);
+
+
+   /* auto sprite1 = Sprite3D::create(fileName);
+    sprite1->setScale(0.1f);
+    auto s1 = Director::getInstance()->getWinSize();
+    sprite1->setPosition(Vec2(s1.width / 2.f, s1.height / 2.f));
+    addChild(sprite1);
+
+    auto animation1 = Animation3D::create(fileName);
+    Animate3D* animate1;
+    Animate3D* animate2;
+    if (animation1)
+    {
+        animate1 = Animate3D::create(animation1, 0.f, 1.933f);
+        animate1->retain();
+        animate2 = Animate3D::create(animation1, 1.933f, 2.8f);
+        animate2->retain();
+    }
+    
+    auto seq1 = Sequence::create(animate1, animate2, nullptr);
+    sprite1->runAction(seq1);*/
 }
 
 void Animate3DTest::reachEndCallBack()
@@ -929,12 +953,12 @@ void Animate3DTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* ev
                 //hurt the tortoise
                 if (_state == State::SWIMMING)
                 {
-                    _sprite->runAction(_hurt);
-                    auto delay = DelayTime::create(_hurt->getDuration() - 0.1f);
-                    auto seq = Sequence::create(delay, CallFunc::create(CC_CALLBACK_0(Animate3DTest::renewCallBack, this)), nullptr);
-                    seq->setTag(101);
-                    _sprite->runAction(seq);
-                    _state = State::SWIMMING_TO_HURT;
+                    //_sprite->runAction(_hurt);
+                    //auto delay = DelayTime::create(_hurt->getDuration() - 0.1f);
+                    //auto seq = Sequence::create(delay, CallFunc::create(CC_CALLBACK_0(Animate3DTest::renewCallBack, this)), nullptr);
+                    //seq->setTag(101);
+                    //_sprite->runAction(seq);
+                    //_state = State::SWIMMING_TO_HURT;
                 }
                 return;
             }
