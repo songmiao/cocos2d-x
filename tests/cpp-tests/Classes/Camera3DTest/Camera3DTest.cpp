@@ -332,6 +332,11 @@ void Camera3DTestDemo::addNewSpriteWithCoords(Vec3 p,std::string fileName,bool p
         _sprite3D=sprite;
     }
     sprite->setScale(scale);  
+
+    auto billboradAni = BillBoard::create("Images/grossini.png");
+    billboradAni->setScale(0.5f);
+    billboradAni->setPosition3D(Vec3(p.x, p.y,  -50));
+    _layer3D->addChild(billboradAni);
 }
 void Camera3DTestDemo::onTouchesBegan(const std::vector<Touch*>& touches, cocos2d::Event  *event)
 {

@@ -1284,33 +1284,48 @@ std::string Sprite3DWithSkinTest::subtitle() const
 
 void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
 {
-    std::string fileName = "Sprite3DTest/orc.c3b";
-    auto sprite = EffectSprite3D::create(fileName);
-    sprite->setScale(3);
-    sprite->setRotation3D(Vec3(0,180,0));
-    addChild(sprite);
-    sprite->setPosition( Vec2( p.x, p.y) );
+    //std::string fileName = "Sprite3DTest/orc.c3b";
+    //auto sprite = EffectSprite3D::create(fileName);
+    //sprite->setScale(3);
+    //sprite->setRotation3D(Vec3(0,180,0));
+    //addChild(sprite);
+    //sprite->setPosition( Vec2( p.x, p.y) );
 
-    auto animation = Animation3D::create(fileName);
-    if (animation)
-    {
-        auto animate = Animate3D::create(animation);
-        bool inverse = (std::rand() % 3 == 0);
+    //auto animation = Animation3D::create(fileName);
+    //if (animation)
+    //{
+    //    auto animate = Animate3D::create(animation);
+    //    bool inverse = (std::rand() % 3 == 0);
 
-        int rand2 = std::rand();
-        float speed = 1.0f;
-        if(rand2 % 3 == 1)
-        {
-            speed = animate->getSpeed() + CCRANDOM_0_1();
-        }
-        else if(rand2 % 3 == 2)
-        {
-            speed = animate->getSpeed() - 0.5 * CCRANDOM_0_1();
-        }
-        animate->setSpeed(inverse ? -speed : speed);
+    //    int rand2 = std::rand();
+    //    float speed = 1.0f;
+    //    if(rand2 % 3 == 1)
+    //    {
+    //        speed = animate->getSpeed() + CCRANDOM_0_1();
+    //    }
+    //    else if(rand2 % 3 == 2)
+    //    {
+    //        speed = animate->getSpeed() - 0.5 * CCRANDOM_0_1();
+    //    }
+    //    animate->setSpeed(inverse ? -speed : speed);
 
-        sprite->runAction(RepeatForever::create(animate));
-    }
+    //    sprite->runAction(RepeatForever::create(animate));
+    //}
+
+    auto name = "Sprite3DTest/1001.c3t";
+	auto s1 = Sprite3D::create(name);
+	addChild(s1);
+	s1->setPosition(Vec2( p.x, p.y));
+	s1->setRotation3D(Vec3(0,-30,0));
+	auto a1 = Animation3D::create(name);
+	auto animate = Animate3D::createWithFrames(a1,0,40);
+	auto animate2 = Animate3D::createWithFrames(a1,100,140);
+    animate->setSpeed(2);
+    animate2->setSpeed(2);
+	auto seq = CCSequence::createWithTwoActions(animate, animate2);  
+	auto forever = CCRepeatForever::create(seq); 
+	s1->runAction(forever);
+
 }
 
 void Sprite3DWithSkinTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
